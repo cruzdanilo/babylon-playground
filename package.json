@@ -1,0 +1,37 @@
+{
+  "name": "babylon-playground",
+  "version": "0.1.0",
+  "description": "babylon playground",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "author": {
+    "name": "danilo neves cruz",
+    "email": "cruzdanilo@gmail.com"
+  },
+  "license": "GPL-3.0",
+  "private": true,
+  "dependencies": {
+    "babylonjs": "^3.2.0-alphaA",
+    "file-loader": "^1.1.10",
+    "html-webpack-plugin": "jantimon/html-webpack-plugin",
+    "nominatim-browser": "^2.0.2",
+    "webpack": "^4.0.1",
+    "webpack-cli": "^2.0.9"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "webpack-dev-server": "^3.1.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "browser": true,
+      "node": false
+    }
+  }
+}
