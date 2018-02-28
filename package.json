@@ -14,7 +14,7 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
-    "babylonjs": "^3.2.0-alphaA",
+    "babylonjs": "^3.2.0-alphaB",
     "file-loader": "^1.1.10",
     "html-webpack-plugin": "jantimon/html-webpack-plugin",
     "nominatim-browser": "^2.0.2",
