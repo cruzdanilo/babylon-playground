@@ -1,9 +1,12 @@
 import {
   Animation,
   ArcRotateCamera,
+  Axis,
   HemisphericLight,
+  Mesh,
   MeshBuilder,
   Scene,
+  Space,
   StandardMaterial,
   Vector3,
 } from 'babylonjs';
@@ -14,6 +17,8 @@ export default class HoroscopeScene extends Scene {
     super(engine);
 
     this.camera = new ArcRotateCamera('camera', 0, 1.2, 10, Vector3.Zero(), this);
+    this.camera.lowerRadiusLimit = 2;
+    this.camera.upperRadiusLimit = 100;
     this.camera.attachControl(engine.getRenderingCanvas());
     this.light = new HemisphericLight('light0', new Vector3(1, 0, 0), this);
     const sun = new Animation('sun', 'direction', 30, Animation.ANIMATIONTYPE_VECTOR3);
@@ -46,17 +51,25 @@ export default class HoroscopeScene extends Scene {
     this.beginDirectAnimation(this.light, [sun], 0, 120, true);
 
     this.earth = MeshBuilder.CreateSphere('earth', {}, this);
+    const radius = 3;
     const wireframe = new StandardMaterial('wireframe', this);
     wireframe.wireframe = true;
-    const diameter = 5;
-    this.celestial = MeshBuilder.CreateSphere('celestial', { diameter }, this);
-    this.celestial.material = wireframe;
-    this.zodiac = MeshBuilder.CreateCylinder('zodiac', {
-      diameter,
-      height: 0.5,
-      tessellation: 12,
+    this.equator = MeshBuilder.CreateCylinder('equator', {
+      diameter: radius * 2,
+      height: 0.001,
     }, this);
-    this.zodiac.material = wireframe;
+    this.equator.parent = this.earth;
+    this.equator.material = wireframe;
+    this.axis = MeshBuilder.CreateLines('axis', {
+      points: [new Vector3(0, -radius, 0), new Vector3(0, radius, 0)],
+    }, this);
+    this.axis.parent = this.earth;
+    this.zodiac = MeshBuilder.CreateTube('zodiac', {
+      radius,
+      path: [new Vector3(0, -0.2, 0), new Vector3(0, 0.2, 0)],
+      sideOrientation: Mesh.DOUBLESIDE,
+    }, this);
+    this.zodiac.rotate(Axis.X, 23.5 * (Math.PI / 180), Space.LOCAL);
 
     nominatim.geocode({ city: 'sao paulo' })
       .then(r => console.log(r))
