@@ -16,7 +16,7 @@
   "dependencies": {
     "babylonjs": "^3.2.0-alphaB",
     "file-loader": "^1.1.10",
-    "html-webpack-plugin": "jantimon/html-webpack-plugin",
+    "html-webpack-plugin": "^3.0.4",
     "nominatim-browser": "^2.0.2",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.9"
