@@ -1,3 +1,4 @@
+import 'pepjs';
 import { Engine } from 'babylonjs';
 import HoroscopeScene from './HoroscopeScene';
 

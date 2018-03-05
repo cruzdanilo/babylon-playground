@@ -12,4 +12,5 @@ module.exports = (env, options) => ({
   module: { rules: [{ test: /\.gltf$/, use: 'file-loader' }] },
   plugins: [new HtmlWebpackPlugin({ template: 'index.ejs' })],
   devtool: options.mode === 'development' ? 'source-map' : false,
+  devServer: { host: '0.0.0.0' },
 });
