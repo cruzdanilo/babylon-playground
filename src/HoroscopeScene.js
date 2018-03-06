@@ -10,7 +10,6 @@ import {
   StandardMaterial,
   Vector3,
 } from 'babylonjs';
-import nominatim from 'nominatim-browser';
 
 export default class HoroscopeScene extends Scene {
   constructor(engine) {
@@ -70,9 +69,5 @@ export default class HoroscopeScene extends Scene {
       sideOrientation: Mesh.DOUBLESIDE,
     }, this);
     this.zodiac.rotate(Axis.X, 23.5 * (Math.PI / 180), Space.LOCAL);
-
-    nominatim.geocode({ city: 'sao paulo' })
-      .then(r => console.log(r))
-      .catch(e => console.error(e));
   }
 }
