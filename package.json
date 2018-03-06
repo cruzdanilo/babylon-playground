@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "stats": "webpack --profile --json --mode production > stats.json"
   },
   "author": {
     "name": "danilo neves cruz",
@@ -16,7 +17,7 @@
   "dependencies": {
     "babylonjs": "^3.2.0-alphaB",
     "file-loader": "^1.1.11",
-    "html-webpack-plugin": "^3.0.4",
+    "html-webpack-plugin": "^3.0.6",
     "pepjs": "^0.4.3",
     "webpack": "^4.1.0",
     "webpack-cli": "^2.0.10"
