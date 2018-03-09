@@ -39,27 +39,33 @@ export default class HoroscopeScene extends Scene {
     const thickness = 0.025;
     const tessellation = 64;
 
-    this.equator = MeshBuilder.CreateTorus('equator', {
-      diameter: 2 * radius,
-      thickness,
-      tessellation,
-    }, this);
-
     this.axis = MeshBuilder.CreateLines('axis', {
       points: [new Vector3(0, -radius, 0), new Vector3(0, radius, 0)],
     }, this);
 
-    for (let i = 0; i < 6; i += 1) {
+    let count = 6;
+    for (let i = 0; i < count; i += 1) {
       const meridian = MeshBuilder.CreateTorus(`meridian${0}`, {
         diameter: 2 * radius,
         thickness,
         tessellation,
       }, this);
       meridian.rotationQuaternion = Quaternion.RotationYawPitchRoll(
-        i * (Math.PI / 6),
+        i * (Math.PI / count),
         0,
         Math.PI / 2,
       );
+    }
+
+    count = 7;
+    for (let i = 0; i < count; i += 1) {
+      const a = (i + 0.5) * (Math.PI / count);
+      const parallel = MeshBuilder.CreateTorus(`parallel${0}`, {
+        diameter: 2 * radius * Math.sin(a),
+        thickness,
+        tessellation,
+      }, this);
+      parallel.position.y = radius * Math.cos(a);
     }
 
     this.zodiac = MeshBuilder.CreateTube('zodiac', {
