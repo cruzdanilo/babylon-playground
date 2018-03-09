@@ -3,15 +3,19 @@ import {
   ArcRotateCamera,
   Axis,
   Color3,
+  Color4,
   HemisphericLight,
   Mesh,
   MeshBuilder,
+  Quaternion,
   Scene,
   Space,
   StandardMaterial,
   Texture,
   Vector3,
 } from 'babylonjs';
+import { AdvancedDynamicTexture, Control, InputText } from 'babylonjs-gui';
+import { geocode } from 'nominatim-browser';
 import earth from './assets/earth.jpg';
 
 export default class HoroscopeScene extends Scene {
@@ -75,5 +79,33 @@ export default class HoroscopeScene extends Scene {
     keys.push({ frame: 120, value: keys[0].value });
     animation.setKeys(keys);
     this.beginDirectAnimation(this.sun, [animation], 0, 120, true);
+
+    const advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI('UI');
+    const input = new InputText();
+    input.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+    input.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    input.width = 0.5;
+    input.maxWidth = 0.5;
+    input.height = '32px';
+    input.text = 'bauru, sp, brasil';
+    input.color = 'white';
+    input.onBlurObservable.add(x => geocode({ q: x.text })
+      .then((r) => {
+        if (!r || !r.length) return;
+        if (!this.zenith) {
+          const color = new Color4(1, 0, 0, 1);
+          this.zenith = MeshBuilder.CreateLines('zenith', {
+            points: [new Vector3(0, 0, 0), new Vector3(radius, 0, 0)],
+            colors: [color, color],
+          }, this);
+        }
+        this.zenith.rotationQuaternion = Quaternion.RotationYawPitchRoll(
+          -Number(r[0].lon) * (Math.PI / 180),
+          0,
+          Number(r[0].lat) * (Math.PI / 180),
+        );
+      }));
+    advancedTexture.addControl(input);
+    input.onBlurObservable.notifyObservers(input);
   }
 }

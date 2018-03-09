@@ -16,10 +16,12 @@
   "private": true,
   "dependencies": {
     "babylonjs": "^3.2.0-alphaB",
+    "babylonjs-gui": "^3.2.0-alphaB",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.6",
+    "nominatim-browser": "^2.0.2",
     "pepjs": "^0.4.3",
-    "webpack": "^4.1.0",
+    "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10"
   },
   "devDependencies": {
