@@ -25,6 +25,7 @@ export default class HoroscopeScene extends Scene {
     this.camera = new ArcRotateCamera('camera', 0, 1.2, 10, Vector3.Zero(), this);
     this.camera.lowerRadiusLimit = 2;
     this.camera.upperRadiusLimit = 100;
+    this.camera.panningSensibility = 0;
     this.camera.attachControl(engine.getRenderingCanvas());
     this.light = new HemisphericLight('light0', new Vector3(1, 0, 0), this);
 
