@@ -9,8 +9,10 @@ import {
   Scene,
   Space,
   StandardMaterial,
+  Texture,
   Vector3,
 } from 'babylonjs';
+import earth from './assets/earth.jpg';
 
 export default class HoroscopeScene extends Scene {
   constructor(engine) {
@@ -23,38 +25,44 @@ export default class HoroscopeScene extends Scene {
     this.light = new HemisphericLight('light0', new Vector3(1, 0, 0), this);
 
     this.earth = MeshBuilder.CreateSphere('earth', {}, this);
+    this.earth.material = new StandardMaterial('earth', this);
+    this.earth.material.diffuseTexture = new Texture(earth, this);
+    this.earth.scaling.x = -1;
+    this.earth.scaling.y = -1;
+
     const radius = 3;
     const width = 0.02;
+
     this.equator = MeshBuilder.CreateTube('equator', {
       radius,
       path: [new Vector3(0, -width / 2, 0), new Vector3(0, width / 2, 0)],
       sideOrientation: Mesh.DOUBLESIDE,
     }, this);
-    this.equator.parent = this.earth;
+
     this.axis = MeshBuilder.CreateLines('axis', {
       points: [new Vector3(0, -radius, 0), new Vector3(0, radius, 0)],
     }, this);
-    this.axis.parent = this.earth;
-    this.zodiac = MeshBuilder.CreateTube('zodiac', {
-      radius,
-      path: [new Vector3(0, -0.2, 0), new Vector3(0, 0.2, 0)],
-      sideOrientation: Mesh.DOUBLESIDE,
-    }, this);
-    this.zodiac.rotate(Axis.X, 23.5 * (Math.PI / 180), Space.LOCAL);
+
     for (let i = 0; i < 6; i += 1) {
       const meridian = MeshBuilder.CreateTube(`meridian${0}`, {
         radius,
         path: [new Vector3(0, 0, -width / 2), new Vector3(0, 0, width / 2)],
         sideOrientation: Mesh.DOUBLESIDE,
       }, this);
-      meridian.parent = this.earth;
       meridian.rotate(Axis.Y, i * (Math.PI / 6), Space.LOCAL);
     }
+
+    this.zodiac = MeshBuilder.CreateTube('zodiac', {
+      radius,
+      path: [new Vector3(0, -0.2, 0), new Vector3(0, 0.2, 0)],
+      sideOrientation: Mesh.DOUBLESIDE,
+    }, this);
+    this.zodiac.rotate(Axis.X, 23.5 * (Math.PI / 180), Space.LOCAL);
+
     this.sun = MeshBuilder.CreateSphere('sun', { diameter: 0.2 }, this);
     this.sun.parent = this.zodiac;
-    const material = new StandardMaterial('sun', this);
-    material.diffuseColor = Color3.Yellow();
-    this.sun.material = material;
+    this.sun.material = new StandardMaterial('sun', this);
+    this.sun.material.diffuseColor = Color3.Yellow();
     const animation = new Animation('sun', 'position', 30, Animation.ANIMATIONTYPE_VECTOR3);
     const keys = [];
     for (let i = 0; i < 12; i += 1) {

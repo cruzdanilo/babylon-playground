@@ -10,7 +10,7 @@ module.exports = (env, options) => ({
     filename: '[hash].js',
     path: path.resolve(__dirname, 'dist'),
   },
-  module: { rules: [{ test: /\.gltf$/, use: 'file-loader' }] },
+  module: { rules: [{ test: /\.jpg$/, use: 'file-loader' }] },
   plugins: [
     new HtmlWebpackPlugin({ template: 'index.ejs' }),
     new DefinePlugin({ OIMO: JSON.stringify(true), CANNON: JSON.stringify(true) }),
